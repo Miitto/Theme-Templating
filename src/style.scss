@@ -1,0 +1,53 @@
+@import '$lib/scss/heatmap.theme.scss';
+
+:root {
+	background-color: var(--bg);
+	color: var(--text);
+
+	--success: #14a44d;
+	--danger: #dc4c64;
+	--warning: #e4a11b;
+	--info: #54b4d3;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	min-width: 0;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	color: var(--text-link);
+}
+
+button,
+input,
+select {
+	background-color: var(--bg-alt);
+	color: var(--text);
+	padding: 0.25rem 0.5rem;
+	border-radius: var(--border-radius-element);
+}
+
+button.info {
+	background-color: var(--info);
+}
+
+button.success {
+	background-color: var(--success);
+}
+
+button.danger {
+	background-color: var(--danger);
+}
+
+button.warning {
+	background-color: var(--warning);
+}

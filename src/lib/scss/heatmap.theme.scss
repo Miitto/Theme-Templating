@@ -1,0 +1,197 @@
+@mixin heatmap-base-theme() {
+	$textLight: #000;
+	$textDark: #e6edf3;
+
+	$background-light: #fff;
+	$background-dark: #010409;
+
+	--primary: #00d9ff;
+	--primary-hover: #00e9ff;
+	--secondary: #ff7c02;
+	--secondary-hover: #ff8c02;
+
+	--primary-text: #000;
+	--secondary-text: #fff;
+
+	--primary-border-color: #00d9ff;
+	--secondary-border-color: #ff7c02;
+
+	--primary-border-width: 1px;
+	--secondary-border-width: 1px;
+
+	--primary-border: var(--primary-border-width) solid var(--primary-border-color);
+	--secondary-border: var(--secondary-border-width) solid var(--secondary-border-color);
+
+	--text-link: #2f81f7;
+
+	--border-radius-element: 0.25rem;
+	--border-radius-container: 0;
+
+	--divider: #5555;
+
+	--container-border-width: 10px;
+
+	--header-blur-height: 10px;
+
+	color: var(--text);
+	background-color: var(--bg);
+
+	button,
+	select,
+	input[type='submit'] {
+		padding: 0.5em 0.75em;
+		border-radius: var(--border-radius-element);
+		&:not(.primary):not(.secondary) {
+			&:not(.info):not(.success):not(.danger):not(.warning) {
+				background-color: var(--bg-alt);
+				color: var(--text);
+			}
+			border: 1px solid var(--divider);
+		}
+
+		&:hover {
+			cursor: pointer;
+			filter: var(--hover-mod);
+		}
+	}
+
+	.primary,
+	.secondary {
+		--shadow-width: 1px;
+		--shadow-color: #{$textDark};
+		--shadow-alt-color: #{$textLight};
+		box-shadow:
+			inset 1px 1px var(--shadow-width) var(--shadow-color),
+			inset -1px -1px var(--shadow-width) var(--shadow-alt-color);
+
+		&:hover {
+			--hover-mod: none;
+		}
+
+		&:active {
+			outline: none;
+			--shadow-color: #{$textLight};
+			--shadow-alt-color: #{$textDark};
+		}
+	}
+
+	.primary {
+		color: var(--primary-text);
+		background-color: var(--primary);
+		border: none;
+
+		&:hover {
+			background-color: var(--primary-hover);
+		}
+	}
+
+	.secondary {
+		color: var(--secondary-text);
+		background-color: var(--secondary);
+		border: none;
+		&:hover {
+			background-color: var(--secondary-hover);
+		}
+	}
+
+	input:not([type='submit']) {
+		border: var(--primary-border);
+
+		&:focus {
+			border: var(--secondary-border);
+			outline: none;
+		}
+	}
+
+	&.container,
+	.container {
+		$b: var(--container-border-width);
+		padding: calc(1rem + $b);
+		background-color: var(--bg);
+		border-radius: var(--border-radius-container);
+		position: relative;
+
+		&:before {
+			position: absolute;
+			content: '';
+			backdrop-filter: blur(50px);
+			width: 100%;
+			height: 100%;
+
+			top: 0;
+			left: 0;
+			clip-path: polygon(
+				evenodd,
+				0% 0%,
+				100% 0%,
+				100% 100%,
+				0% 100%,
+				0 0,
+				$b $b,
+				calc(100% - $b) $b,
+				calc(100% - $b) calc(100% - $b),
+				$b calc(100% - $b),
+				$b $b
+			);
+		}
+	}
+
+	header {
+		background-color: var(--bg-alt);
+		padding: 0.5rem 1rem;
+		border-bottom: 1px solid var(--divider);
+		position: relative;
+
+		&:after {
+			position: absolute;
+			content: '';
+			width: 100%;
+			height: var(--header-blur-height);
+			left: 0;
+			bottom: 0;
+
+			filter: blur(10px);
+			mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+		}
+	}
+}
+
+@mixin heatmap-light-theme() {
+	@include heatmap-base-theme();
+	--bg: #fff;
+	--bg-alt: #f6f8fa;
+	--text: #000;
+
+	--hover-mod: brightness(0.8);
+}
+@mixin heatmap-dark-theme() {
+	@include heatmap-base-theme();
+	--bg: #010409;
+	--bg-alt: #0d1117;
+
+	--text: #e6edf3;
+
+	--hover-mod: brightness(1.2);
+}
+
+@mixin heatmap-theme() {
+	@media (prefers-color-scheme: dark) {
+		@include heatmap-dark-theme();
+	}
+
+	@media (prefers-color-scheme: light) {
+		@include heatmap-light-theme();
+	}
+}
+
+.heatmap__theme {
+	@include heatmap-theme();
+}
+
+.heatmap__light__theme {
+	@include heatmap-light-theme();
+}
+
+.heatmap__dark__theme {
+	@include heatmap-dark-theme();
+}
