@@ -1,14 +1,20 @@
 <script>
 	import ExampleBlock from '$lib/Components.svelte/ExampleBlock.svelte';
+
+	const themes = ['heatmap'];
 </script>
 
 <div class="wrapper">
 	<div class="light">
-		<ExampleBlock theme="heatmap__light" />
+		{#each themes as theme}
+			<ExampleBlock theme={`${theme}__light`} />
+		{/each}
 	</div>
 	<div class="transition"></div>
 	<div class="dark">
-		<ExampleBlock theme="heatmap__dark" />
+		{#each themes as theme}
+			<ExampleBlock theme={`${theme}__dark`} />
+		{/each}
 	</div>
 </div>
 
